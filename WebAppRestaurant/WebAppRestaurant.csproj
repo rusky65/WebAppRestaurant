@@ -185,6 +185,14 @@
     <Compile Include="Migrations\201807071330334_add MenuItem table.Designer.cs">
       <DependentUpon>201807071330334_add MenuItem table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807071738149_add MenuItem table add column Price.cs" />
+    <Compile Include="Migrations\201807071738149_add MenuItem table add column Price.Designer.cs">
+      <DependentUpon>201807071738149_add MenuItem table add column Price.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071753203_add MenuItem alter column Name length to 200.cs" />
+    <Compile Include="Migrations\201807071753203_add MenuItem alter column Name length to 200.Designer.cs">
+      <DependentUpon>201807071753203_add MenuItem alter column Name length to 200.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -269,6 +277,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807071330334_add MenuItem table.resx">
       <DependentUpon>201807071330334_add MenuItem table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071738149_add MenuItem table add column Price.resx">
+      <DependentUpon>201807071738149_add MenuItem table add column Price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071753203_add MenuItem alter column Name length to 200.resx">
+      <DependentUpon>201807071753203_add MenuItem alter column Name length to 200.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
