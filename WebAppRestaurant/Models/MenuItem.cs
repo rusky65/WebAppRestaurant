@@ -16,6 +16,7 @@ namespace WebAppRestaurant.Models {
         /// <summary>
         /// Navigation property
         /// </summary>
+        [Required]
         public Category Category { get; set; }
     }
 }
