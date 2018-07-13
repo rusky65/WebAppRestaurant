@@ -1,29 +1,40 @@
-﻿@model IEnumerable<WebAppRestaurant.Models.MenuItem>
+﻿@model IEnumerable<WebAppRestaurant.Models.Category>
 
 @{
     ViewBag.Title = "Index";
-    var category = "";
 }
 
 <h2>Menu</h2>
 
+<div class="panel-group" id="menu">
 
-@foreach (var item in Model) {
+    @foreach (var category in Model) {
 
-    if (category != item.Category.Name) {
-        category = item.Category.Name;
-        <h3>
-            @Html.DisplayFor(modelItem => item.Category.Name)
-        </h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#menu" href="#collapse@(category.Id)">
+                        @Html.DisplayFor(modelItem => category.Name)
+                    </a>
+                </h3>
+            </div>
+            <div id="collapse@(category.Id)" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    @foreach (var menuItem in category.MenuItems) {
+                        <h4>
+                            @Html.DisplayFor(modelItem => menuItem.Name)
+                        </h4>
+                        <p>
+                            @Html.DisplayFor(modelItem => menuItem.Description)
+                        </p>
+                        <p>
+                            <strong>@Html.DisplayFor(modelItem => menuItem.Price)</strong>
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+
     }
 
-    <h4>
-        @Html.DisplayFor(modelItem => item.Name)
-    </h4>
-    <p>
-        @Html.DisplayFor(modelItem => item.Description)
-    </p>
-    <p>
-        <strong>@Html.DisplayFor(modelItem => item.Price)</strong>
-    </p>
-}
+</div>

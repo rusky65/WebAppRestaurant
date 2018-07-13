@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAppRestaurant.Models {
 
@@ -7,5 +8,10 @@ namespace WebAppRestaurant.Models {
         [Required]
         [StringLength(200)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Navigation property
+        /// </summary>
+        public List<MenuItem> MenuItems { get; set; }
     }
 }
