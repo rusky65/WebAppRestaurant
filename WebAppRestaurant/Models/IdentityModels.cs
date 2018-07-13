@@ -31,5 +31,10 @@ namespace WebAppRestaurant.Models
         {
             return new ApplicationDbContext();
         }
+
+        /// <summary>
+        /// This script was automatic created with Controller wizard to access to datas of Categories
+        /// </summary>
+        public System.Data.Entity.DbSet<WebAppRestaurant.Models.Category> Categories { get; set; }
     }
 }
