@@ -43,9 +43,17 @@ namespace WebAppRestaurant.Controllers
         /// Only authorized user can use this controller.
         /// </summary>
         [Authorize]
-        public ActionResult Create()
-        {
-            return View();
+        public ActionResult Create() {
+            var menuItem = new MenuItem();
+
+            FillAssignableCategories(menuItem);
+            return View(menuItem);
+        }
+
+        private void FillAssignableCategories(MenuItem menuItem) {
+            foreach (var category in db.Categories.ToList()) {
+                menuItem.AssignedCategories.Add(new SelectListItem() { Text = category.Name, Value = category.Id.ToString() });
+            }
         }
 
         // POST: MenuItems/Create
@@ -54,7 +62,7 @@ namespace WebAppRestaurant.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Price")] MenuItem menuItem)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Price,CategoryId")] MenuItem menuItem)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +71,7 @@ namespace WebAppRestaurant.Controllers
                 return RedirectToAction("Index");
             }
 
+            FillAssignableCategories(menuItem);
             return View(menuItem);
         }
 
