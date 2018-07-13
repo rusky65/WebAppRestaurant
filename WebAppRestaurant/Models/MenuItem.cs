@@ -13,6 +13,9 @@ namespace WebAppRestaurant.Models {
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
+        /// <summary>
+        /// Navigation property
+        /// </summary>
         public Category Category { get; set; }
     }
 }

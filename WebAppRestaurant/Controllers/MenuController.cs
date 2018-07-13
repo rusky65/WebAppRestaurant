@@ -17,7 +17,11 @@ namespace WebAppRestaurant.Controllers
         // GET: Menu
         public ActionResult Index()
         {
-            return View(db.MenuItems.ToList());
+            var model = db.MenuItems
+                .Include(mi => mi.Category)
+                .OrderBy(mi=>mi.Category.Name)
+                .ToList();
+            return View(model);
         }
 
         // GET: Menu/Details/5

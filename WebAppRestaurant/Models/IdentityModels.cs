@@ -25,16 +25,17 @@ namespace WebAppRestaurant.Models
         {
         }
 
-        public DbSet<MenuItem> MenuItems { get; set; } 
+        public DbSet<MenuItem> MenuItems { get; set; }
+
+        /// <summary>
+        /// This script was automatic created with Controller wizard to access to datas of Categories
+        /// </summary>
+        public DbSet<Category> Categories { get; set; }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        /// <summary>
-        /// This script was automatic created with Controller wizard to access to datas of Categories
-        /// </summary>
-        public System.Data.Entity.DbSet<WebAppRestaurant.Models.Category> Categories { get; set; }
     }
 }
