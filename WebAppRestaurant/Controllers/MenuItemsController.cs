@@ -50,6 +50,10 @@ namespace WebAppRestaurant.Controllers
             return View(menuItem);
         }
 
+        /// <summary>
+        /// Fills up the DropDownList field with the actual items.
+        /// </summary>
+        /// <param name="menuItem"></param>
         private void FillAssignableCategories(MenuItem menuItem) {
             foreach (var category in db.Categories.ToList()) {
                 menuItem.AssignedCategories.Add(new SelectListItem() { Text = category.Name, Value = category.Id.ToString() });
