@@ -120,11 +120,38 @@ namespace WebAppRestaurant.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Price")] MenuItem menuItem)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Price,CategoryId")] MenuItem menuItem)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(menuItem).State = EntityState.Modified;
+            // Fill up the MenuItem.Category
+            // Search for the aktual value from database
+            // It's necessary for validation.
+            var category = db.Categories.Find(menuItem.CategoryId);
+
+            // we intruduce the menuItem to EntityFramework
+            //with this can load Navigation Property of menuItem
+            db.MenuItems.Attach(menuItem);
+
+            var menuItemEntry = db.Entry(menuItem);
+
+            // we load the Navigation Property !
+            // EntityFramework knows from now about the Navigation Property and save its changes.
+            // Warning ! If we would set the category before this ("menuItem.Category = category;"), this function wouldn't do anything.
+            menuItemEntry.Reference(x => x.Category)
+                            .Load();
+
+            // we set the value of Category (Navigation Property)
+            // It's necessary for EntityFramework to save into database.
+            menuItem.Category = category;
+
+            // Have to validate the model once more
+            ModelState.Clear();
+            var isValid = TryValidateModel(menuItem);
+
+            if (ModelState.IsValid) {
+                // This signs the changes of datas to Entity Framework
+                menuItemEntry.State = EntityState.Modified;
+
+                // Saving datas.
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
