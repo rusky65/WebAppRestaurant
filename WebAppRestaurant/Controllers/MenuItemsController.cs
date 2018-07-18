@@ -68,6 +68,16 @@ namespace WebAppRestaurant.Controllers
         [Authorize]
         public ActionResult Create([Bind(Include = "Id,Name,Description,Price,CategoryId")] MenuItem menuItem)
         {
+            // Fill up the MenuItem.Category
+            // Search for the aktual value from database
+            var category = db.Categories.Find(menuItem.CategoryId);
+            // Give value to Category property
+            menuItem.Category = category;
+
+            // Have to validate the model once more
+            ModelState.Clear();
+            var isValid = TryValidateModel(menuItem);
+
             if (ModelState.IsValid)
             {
                 db.MenuItems.Add(menuItem);
@@ -92,6 +102,15 @@ namespace WebAppRestaurant.Controllers
             {
                 return HttpNotFound();
             }
+
+            // if the menuItem is NOT null
+            FillAssignableCategories(menuItem);
+            
+            // Fill up the MenuItem.Category
+            // Search for the aktual value from database
+            // Give value to Category property
+            menuItem.CategoryId = menuItem.Category.Id;
+
             return View(menuItem);
         }
 

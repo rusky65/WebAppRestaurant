@@ -28,10 +28,12 @@ namespace WebAppRestaurant.Models {
         #region Properties just for Views
         /// <summary>
         /// Assigned this property for Code First not to get into database
+        /// This property contains the all possible value.
         /// </summary>
         [NotMapped]
         public List<SelectListItem> AssignedCategories { get; set; }
 
+        /// This property contains the actual selected value.
         [NotMapped]
         public int CategoryId { get; set; }
         #endregion Properties just for Views
