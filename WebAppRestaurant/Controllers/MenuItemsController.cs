@@ -29,10 +29,16 @@ namespace WebAppRestaurant.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             MenuItem menuItem = db.MenuItems.Find(id);
+            
             if (menuItem == null)
             {
                 return HttpNotFound();
             }
+
+            //Loads the Navigation Property, Category for the given menuItem.
+            // (It isn't necessary to get back the result of the function into a variant.)
+            GetMenuItemEntryAndLoadCategory(menuItem);
+
             return View(menuItem);
         }
         #endregion Open actions parts
@@ -120,24 +126,14 @@ namespace WebAppRestaurant.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Price,CategoryId")] MenuItem menuItem)
-        {
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Price,CategoryId")] MenuItem menuItem) {
             // Fill up the MenuItem.Category
             // Search for the aktual value from database
             // It's necessary for validation.
             var category = db.Categories.Find(menuItem.CategoryId);
 
-            // we intruduce the menuItem to EntityFramework
-            //with this can load Navigation Property of menuItem
-            db.MenuItems.Attach(menuItem);
-
-            var menuItemEntry = db.Entry(menuItem);
-
-            // we load the Navigation Property !
-            // EntityFramework knows from now about the Navigation Property and save its changes.
-            // Warning ! If we would set the category before this ("menuItem.Category = category;"), this function wouldn't do anything.
-            menuItemEntry.Reference(x => x.Category)
-                            .Load();
+            //Loads the Navigation Property, Category for the given menuItem.
+            var menuItemEntry = GetMenuItemEntryAndLoadCategory(menuItem);
 
             // we set the value of Category (Navigation Property)
             // It's necessary for EntityFramework to save into database.
@@ -158,6 +154,26 @@ namespace WebAppRestaurant.Controllers
             return View(menuItem);
         }
 
+        /// <summary>
+        /// Loads the Navigation Property, Category
+        /// </summary>
+        /// <param name="menuItem">The menuItem for load the Category</param>
+        /// <returns></returns>
+        private System.Data.Entity.Infrastructure.DbEntityEntry<MenuItem> GetMenuItemEntryAndLoadCategory(MenuItem menuItem) {
+            // we intruduce the menuItem to EntityFramework
+            //with this can load Navigation Property of menuItem
+            db.MenuItems.Attach(menuItem);
+
+            var menuItemEntry = db.Entry(menuItem);
+
+            // we load the Navigation Property !
+            // EntityFramework knows from now about the Navigation Property and save its changes.
+            // Warning ! If we would set the category before this ("menuItem.Category = category;"), this function wouldn't do anything.
+            menuItemEntry.Reference(x => x.Category)
+                            .Load();
+            return menuItemEntry;
+        }
+
         // GET: MenuItems/Delete/5
         [Authorize]
         public ActionResult Delete(int? id)
@@ -171,6 +187,11 @@ namespace WebAppRestaurant.Controllers
             {
                 return HttpNotFound();
             }
+
+            //Loads the Navigation Property, Category for the given menuItem.
+            // (It isn't necessary to get back the result of the function into a variant.)
+            GetMenuItemEntryAndLoadCategory(menuItem);
+
             return View(menuItem);
         }
 
