@@ -113,11 +113,17 @@ namespace WebAppRestaurant.Migrations
             var store = new UserStore<ApplicationUser>(context);
             var manager = new ApplicationUserManager(store);
 
-            var result = manager.Create(user, "Aa12345#");
+            //check if the user ist already exists
+            var userExists = manager.FindByEmail(user.Email);
 
-            if (!result.Succeeded) {
-                throw new Exception(string.Join(",", result.Errors));
+            if (null == userExists) {
+                var result = manager.Create(user, "Aa12345#");
+
+                if (!result.Succeeded) {
+                    throw new Exception(string.Join(",", result.Errors));
+                }
             }
+
         }
     }
 }
