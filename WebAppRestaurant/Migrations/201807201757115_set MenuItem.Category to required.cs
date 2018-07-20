@@ -3,7 +3,7 @@ namespace WebAppRestaurant.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addrequiredtoMenuItemCategory : DbMigration
+    public partial class setMenuItemCategorytorequired : DbMigration
     {
         public override void Up()
         {

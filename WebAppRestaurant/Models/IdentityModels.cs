@@ -37,5 +37,10 @@ namespace WebAppRestaurant.Models
             return new ApplicationDbContext();
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+            //modelBuilder.Entity<MenuItem>().Property(x => x.Category).GetType();
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

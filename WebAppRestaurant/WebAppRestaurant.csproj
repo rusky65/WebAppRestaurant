@@ -204,9 +204,13 @@
     <Compile Include="Migrations\201807131811008_add reverse navigation property Category.MenuItems.Designer.cs">
       <DependentUpon>201807131811008_add reverse navigation property Category.MenuItems.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807131818028_add required to MenuItem.Category.cs" />
-    <Compile Include="Migrations\201807131818028_add required to MenuItem.Category.Designer.cs">
-      <DependentUpon>201807131818028_add required to MenuItem.Category.cs</DependentUpon>
+    <Compile Include="Migrations\201807201732587_add MenuItem.Category default value.cs" />
+    <Compile Include="Migrations\201807201732587_add MenuItem.Category default value.Designer.cs">
+      <DependentUpon>201807201732587_add MenuItem.Category default value.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807201757115_set MenuItem.Category to required.cs" />
+    <Compile Include="Migrations\201807201757115_set MenuItem.Category to required.Designer.cs">
+      <DependentUpon>201807201757115_set MenuItem.Category to required.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -318,8 +322,11 @@
     <EmbeddedResource Include="Migrations\201807131811008_add reverse navigation property Category.MenuItems.resx">
       <DependentUpon>201807131811008_add reverse navigation property Category.MenuItems.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807131818028_add required to MenuItem.Category.resx">
-      <DependentUpon>201807131818028_add required to MenuItem.Category.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807201732587_add MenuItem.Category default value.resx">
+      <DependentUpon>201807201732587_add MenuItem.Category default value.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807201757115_set MenuItem.Category to required.resx">
+      <DependentUpon>201807201757115_set MenuItem.Category to required.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
