@@ -1,5 +1,7 @@
 namespace WebAppRestaurant.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
     using System;
     using System.Data.Entity;
@@ -20,6 +22,19 @@ namespace WebAppRestaurant.Migrations
         /// <param name="context"></param>
         protected override void Seed(WebAppRestaurant.Models.ApplicationDbContext context)
         {
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            
+
             // Insert the categories
             var category1 = new Category { Name = "Levesek" };
             var category2 = new Category { Name = "Hideg elõételek" };
@@ -87,19 +102,22 @@ namespace WebAppRestaurant.Migrations
                 Category = category2
             });
 
+            //users insert
+            // we use the services of Identity
+            var user = new ApplicationUser { UserName = "szilard@szilardconto.hu", Email = "szilard@szilardconto.hu" };
 
-            //  This method will be called after migrating to the latest version.
+            //UserStore is responsible for datas
+            //UserManager is the surface of developing.
+            // contex <- UserStore <- UserManager
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var store = new UserStore<ApplicationUser>(context);
+            var manager = new ApplicationUserManager(store);
+
+            var result = manager.Create(user, "Aa12345#");
+
+            if (!result.Succeeded) {
+                throw new Exception(string.Join(",", result.Errors));
+            }
         }
     }
 }
