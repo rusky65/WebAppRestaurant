@@ -14,15 +14,22 @@ namespace WebAppRestaurant.Models {
             AssignedCategories = new List<SelectListItem>();
         }
         public int Id { get; set; }
+
         [Required]
         [StringLength(200)]
+        [Display(Name = "Fogás neve")]
         public string Name { get; set; }
+
+        [Display(Name = "Leírás")]
         public string Description { get; set; }
+
+        [Display(Name = "Ár")]
         public double Price { get; set; }
         /// <summary>
         /// Navigation property
         /// </summary>
         [Required]
+        [Display(Name = "Kategória")]
         public Category Category { get; set; }
 
         #region Properties just for Views

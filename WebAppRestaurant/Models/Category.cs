@@ -5,8 +5,10 @@ namespace WebAppRestaurant.Models {
 
     public class Category {
         public int Id { get; set; }
+
         [Required]
         [StringLength(200)]
+        [Display(Name = "Kategória")]
         public string Name { get; set; }
 
         /// <summary>
