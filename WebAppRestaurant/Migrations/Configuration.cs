@@ -102,6 +102,23 @@ namespace WebAppRestaurant.Migrations
                 Category = category2
             });
 
+            //Insert locations
+            var location1 = new Location() { Name = "Nem dohányzó terem", isNonSmoking = true };
+            var location2 = new Location() { Name = "Dohányzó terem", isNonSmoking = false };
+            var location3 = new Location() { Name = "Terasz", isNonSmoking = false };
+
+            context.Locations.AddOrUpdate(x => x.Name, location1, location2, location3);
+
+            //Insert Tables
+            context.Tables.AddOrUpdate(x => x.Name,
+                new Table { Name = "1. asztal", Location = location1 },
+                new Table { Name = "2. asztal", Location = location1 },
+                new Table { Name = "3. asztal", Location = location2 },
+                new Table { Name = "4. asztal", Location = location2 },
+                new Table { Name = "5. asztal", Location = location3 },
+                new Table { Name = "6. asztal", Location = location3 }
+                );
+
             //users insert
             // we use the services of Identity
             var user = new ApplicationUser { UserName = "szilard@szilardconto.hu", Email = "szilard@szilardconto.hu" };
