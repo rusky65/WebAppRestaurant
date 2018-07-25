@@ -66,10 +66,21 @@ namespace WebAppRestaurant.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Table table = db.Tables.Find(id);
+
+            //Filling up the list of DropDownList
+            table.AssignableLocations = db.Locations
+                                            .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                                            .ToList()
+                                            ;
+
+            //The actual value of LocationId
+            table.LocationId = table.Location.Id;
+
             if (table == null)
             {
                 return HttpNotFound();
             }
+
             return View(table);
         }
 
