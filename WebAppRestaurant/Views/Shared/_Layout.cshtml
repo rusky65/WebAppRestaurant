@@ -22,11 +22,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Menu", "Index", "Menu")</li>
-                    @if (Request.IsAuthenticated) {
+                    @if (Request.RequestContext.HttpContext.User.IsInRole("admin")
+                        || Request.RequestContext.HttpContext.User.IsInRole("cook")) {
                         <li>@Html.ActionLink("Menu Items", "Index", "MenuItems")</li>
                         <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                     }
-                    @if (Request.IsAuthenticated) {
+                    @if (Request.RequestContext.HttpContext.User.IsInRole("admin")
+                || Request.RequestContext.HttpContext.User.IsInRole("waiter")) {
                         <li>@Html.ActionLink("Locations", "Index", "Locations")</li>
                         <li>@Html.ActionLink("Tables", "Index", "Tables")</li>
                     }
