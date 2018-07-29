@@ -20,8 +20,7 @@ namespace WebAppRestaurant.Migrations
         /// This process run always after the "update-database" migration command.
         /// </summary>
         /// <param name="context"></param>
-        protected override void Seed(WebAppRestaurant.Models.ApplicationDbContext context)
-        {
+        protected override void Seed(WebAppRestaurant.Models.ApplicationDbContext context) {
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -33,14 +32,14 @@ namespace WebAppRestaurant.Migrations
             //      new Person { FullName = "Brice Lambson" },
             //      new Person { FullName = "Rowan Miller" }
             //    );
-            
+
 
             // Insert the categories
             var category1 = new Category { Name = "Levesek" };
             var category2 = new Category { Name = "Hideg elõételek" };
             var category3 = new Category { Name = "Meleg elõételek" };
 
-            context.Categories.AddOrUpdate(x => x.Name , category1, category2, category3);
+            context.Categories.AddOrUpdate(x => x.Name, category1, category2, category3);
             //context.Categories.AddOrUpdate(x => x.Name, category2);
             //context.Categories.AddOrUpdate(x => x.Name, category3);
 
@@ -48,10 +47,10 @@ namespace WebAppRestaurant.Migrations
             //            Id Name    Description Price   Category_Id
             //1   Tengeri hal trió Atlanti lazactatár, pácolt lazacfilé és tonhal lazackaviárral   7500    2
             context.MenuItems.AddOrUpdate(x => x.Name, new MenuItem() {
-                    Name = "Tengeri hal trió Atlanti lazactatár",
-                    Description = "pácolt lazacfilé és tonhal lazackaviárral",
-                    Price = 7500,
-                    Category = category2
+                Name = "Tengeri hal trió Atlanti lazactatár",
+                Description = "pácolt lazacfilé és tonhal lazackaviárral",
+                Price = 7500,
+                Category = category2
             });
 
             //2   Füstölt pisztráng Gundel módra  Burgonyasaláta  4500    2
@@ -119,9 +118,49 @@ namespace WebAppRestaurant.Migrations
                 new Table { Name = "6. asztal", Location = location3 }
                 );
 
-            //users insert
-            // we use the services of Identity
-            var user = new ApplicationUser { UserName = "szilard@szilardconto.hu", Email = "szilard@szilardconto.hu" };
+            //Creating cook, waiter, admin  permission groups
+            AddRoleIfNotExists(context, "admin");
+            AddRoleIfNotExists(context, "cook");
+            AddRoleIfNotExists(context, "waiter");
+
+            //Creating users
+            AddUserIfNotExists(context, "szilard@szilardconto.hu", "szilard@szilardconto.hu", "admin,cook,waiter");
+            AddUserIfNotExists(context, "pincer@p.hu", "pincer@p.hu", "waiter");
+            AddUserIfNotExists(context, "szakacs@p.hu", "szakacs@p.hu", "cook");
+
+        }
+
+        /// <summary>
+        /// Insert permission group, if not exists
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="roleName"></param>
+        private void AddRoleIfNotExists(ApplicationDbContext context, string roleName) {
+            //RoleStore is responsible for datas
+            //RoleManager is the surface of developing.
+            var store = new RoleStore<IdentityRole>(context);
+            var manager = new RoleManager<IdentityRole>(store);
+
+            var roleExists = manager.FindByName(roleName);
+            if (roleExists == null) {
+                //If not exists, create
+                var role = new IdentityRole(roleName);
+                var result = manager.Create(role);
+                if (!result.Succeeded) {
+                    throw new Exception(string.Join(",", result.Errors));
+                }
+            }
+        }
+
+        /// <summary>
+        /// users insert, if not exists
+        /// we use the services of Identity
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="userName"></param>
+        /// <param name="email"></param>
+        private static void AddUserIfNotExists(ApplicationDbContext context, string userName, string email, string roles) {
+            var user = new ApplicationUser { UserName = userName, Email = email };
 
             //UserStore is responsible for datas
             //UserManager is the surface of developing.
@@ -141,6 +180,10 @@ namespace WebAppRestaurant.Migrations
                 }
             }
 
+            //Setting the user to the role
+            foreach (var role in roles.Split(',')) {
+                manager.AddToRole(user.Id, role);
+            }
         }
     }
 }
