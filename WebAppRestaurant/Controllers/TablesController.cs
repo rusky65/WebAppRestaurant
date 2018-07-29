@@ -74,6 +74,7 @@ namespace WebAppRestaurant.Controllers
                                             ;
 
             //The actual value of LocationId
+            // See this vs. FillAssignableCategories(menuItem); !!!
             table.LocationId = table.Location.Id;
 
             if (table == null)

@@ -10,6 +10,7 @@ namespace WebAppRestaurant.Models {
     public class Table {
 
         public Table() {
+            //setting default value
             AssignableLocations = new List<SelectListItem>();
         }
 
@@ -22,10 +23,10 @@ namespace WebAppRestaurant.Models {
         public virtual Location Location { get; set; }
 
         #region parts of ViewModel
-        [NotMapped]
+        [NotMapped] //it's just viewmodel, it is not in the database.
         public int LocationId { get; set; }
 
-        [NotMapped]
+        [NotMapped] //it's just viewmodel, it is not in the database.
         public List<SelectListItem> AssignableLocations { get; set; }
 
         #endregion parts of ViewModel
