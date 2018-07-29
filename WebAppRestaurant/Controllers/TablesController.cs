@@ -38,7 +38,11 @@ namespace WebAppRestaurant.Controllers
         // GET: Tables/Create
         public ActionResult Create()
         {
-            return View();
+            var table = new Table();
+
+            FillAssignableLocations(table);
+
+            return View(table);
         }
 
         // POST: Tables/Create
@@ -59,30 +63,35 @@ namespace WebAppRestaurant.Controllers
         }
 
         // GET: Tables/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Edit(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Table table = db.Tables.Find(id);
 
-            //Filling up the list of DropDownList
-            table.AssignableLocations = db.Locations
-                                            .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
-                                            .ToList()
-                                            ;
+            FillAssignableLocations(table);
 
             //The actual value of LocationId
             // See this vs. FillAssignableCategories(menuItem); !!!
             table.LocationId = table.Location.Id;
 
-            if (table == null)
-            {
+            if (table == null) {
                 return HttpNotFound();
             }
 
             return View(table);
+        }
+
+        /// <summary>
+        /// Fills up the list of DropDownList with the values of Location.
+        /// </summary>
+        /// <param name="table">The given table, what have the location.</param>
+        private void FillAssignableLocations(Table table) {
+            //Filling up the list of DropDownList
+            table.AssignableLocations = db.Locations
+                                            .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                                            .ToList()
+                                            ;
         }
 
         // POST: Tables/Edit/5
