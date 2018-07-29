@@ -50,10 +50,15 @@ namespace WebAppRestaurant.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Table table)
+        public ActionResult Create([Bind(Include = "Id,Name,LocationId")] Table table)
         {
+            //todo: if the Location field is required, then the modell must be revalid !
+
             if (ModelState.IsValid)
             {
+                var location = db.Locations.Find(table.LocationId);
+                table.Location = location;
+
                 db.Tables.Add(table);
                 db.SaveChanges();
                 return RedirectToAction("Index");
