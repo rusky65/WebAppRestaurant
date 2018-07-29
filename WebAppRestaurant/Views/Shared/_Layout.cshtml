@@ -25,6 +25,8 @@
                     @if (Request.IsAuthenticated) {
                         <li>@Html.ActionLink("Menu Items", "Index", "MenuItems")</li>
                         <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                    }
+                    @if (Request.IsAuthenticated) {
                         <li>@Html.ActionLink("Locations", "Index", "Locations")</li>
                         <li>@Html.ActionLink("Tables", "Index", "Tables")</li>
                     }

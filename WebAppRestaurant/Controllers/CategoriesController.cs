@@ -10,7 +10,8 @@ using WebAppRestaurant.Models;
 
 namespace WebAppRestaurant.Controllers
 {
-    [Authorize]
+    // Only authorized member of "admin" and "cook" user group can use this controller.  -->  [Authorize(Roles ="admin,cook")
+    [Authorize(Roles = "admin,cook")]
     public class CategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

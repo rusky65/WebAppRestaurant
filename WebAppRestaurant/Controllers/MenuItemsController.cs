@@ -46,9 +46,10 @@ namespace WebAppRestaurant.Controllers
         #region Only for authorized users
         // GET: MenuItems/Create
         /// <summary>
-        /// Only authorized user can use this controller.
+        /// Only authorized user can use this controller.  -->   [Authorize]
+        /// Only authorized member of "admin" and "cook" user group can use this controller.  -->  [Authorize(Roles ="admin,cook")
         /// </summary>
-        [Authorize]
+        [Authorize(Roles = "admin,cook")]
         public ActionResult Create() {
             var menuItem = new MenuItem();
 
@@ -71,7 +72,8 @@ namespace WebAppRestaurant.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        // Only authorized member of "admin" and "cook" user group can use this controller.  -->  [Authorize(Roles ="admin,cook")
+        [Authorize(Roles = "admin,cook")]
         public ActionResult Create([Bind(Include = "Id,Name,Description,Price,CategoryId")] MenuItem menuItem)
         {
             // Fill up the MenuItem.Category
@@ -96,7 +98,8 @@ namespace WebAppRestaurant.Controllers
         }
 
         // GET: MenuItems/Edit/5
-        [Authorize]
+        // Only authorized member of "admin" and "cook" user group can use this controller.  -->  [Authorize(Roles ="admin,cook")
+        [Authorize(Roles = "admin,cook")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -125,7 +128,8 @@ namespace WebAppRestaurant.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        // Only authorized member of "admin" and "cook" user group can use this controller.  -->  [Authorize(Roles ="admin,cook")
+        [Authorize(Roles = "admin,cook")]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,Price,CategoryId")] MenuItem menuItem) {
             // Fill up the MenuItem.Category
             // Search for the aktual value from database
@@ -175,7 +179,8 @@ namespace WebAppRestaurant.Controllers
         }
 
         // GET: MenuItems/Delete/5
-        [Authorize]
+        // Only authorized member of "admin" and "cook" user group can use this controller.  -->  [Authorize(Roles ="admin,cook")
+        [Authorize(Roles = "admin,cook")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -198,7 +203,8 @@ namespace WebAppRestaurant.Controllers
         // POST: MenuItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        // Only authorized member of "admin" and "cook" user group can use this controller.  -->  [Authorize(Roles ="admin,cook")
+        [Authorize(Roles = "admin,cook")]
         public ActionResult DeleteConfirmed(int id)
         {
             MenuItem menuItem = db.MenuItems.Find(id);

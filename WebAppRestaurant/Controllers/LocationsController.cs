@@ -10,6 +10,8 @@ using WebAppRestaurant.Models;
 
 namespace WebAppRestaurant.Controllers
 {
+    // Only authorized member of "admin" and "waiter" user group can use this controller.  -->  [Authorize(Roles ="admin,waiter")
+    [Authorize(Roles = "admin,waiter")]
     public class LocationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
