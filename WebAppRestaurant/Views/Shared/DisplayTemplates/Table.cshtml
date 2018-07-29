@@ -12,4 +12,12 @@
         @Html.DisplayFor(model => model.Name)
     </dd>
 
+    <dt>
+        @Html.DisplayNameFor(model => model.Location)
+    </dt>
+
+    <dd>
+        @Html.DropDownListFor(model => model.LocationId, Model.AssignableLocations, "- válassz ki egy helyszínt -", new { @class = "form-control" , disabled = "disabled" })
+    </dd>
+
 </dl>

@@ -12,6 +12,10 @@ namespace WebAppRestaurant.Models {
         public Table() {
             //setting default value
             AssignableLocations = new List<SelectListItem>();
+
+            //We could expand the null object pattern for the Location property too
+            //It is necessary only if there are no virtual properties.
+            //Location = new Location();
         }
 
         public int Id { get; set; }

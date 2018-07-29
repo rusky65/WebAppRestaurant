@@ -28,6 +28,9 @@ namespace WebAppRestaurant.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Table table = db.Tables.Find(id);
+
+            FillAssignableLocations(table);
+
             if (table == null)
             {
                 return HttpNotFound();
@@ -76,9 +79,6 @@ namespace WebAppRestaurant.Controllers
 
             FillAssignableLocations(table);
 
-            //The actual value of LocationId
-            // See this vs. FillAssignableCategories(menuItem); !!!
-            table.LocationId = table.Location.Id;
 
             if (table == null) {
                 return HttpNotFound();
@@ -97,6 +97,14 @@ namespace WebAppRestaurant.Controllers
                                             .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
                                             .ToList()
                                             ;
+
+            //Setting DropDownList field actual value.
+            //The actual value of LocationId
+            // See this vs. "FillAssignableCategories(menuItem);" in MenuItemsController !!!
+            if (table.Location!= null) {
+                table.LocationId = table.Location.Id;
+            }
+            // if table.Location == null then the table.LocationId default value is "0".
         }
 
         // POST: Tables/Edit/5
@@ -137,6 +145,7 @@ namespace WebAppRestaurant.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Table table = db.Tables.Find(id);
+            FillAssignableLocations(table);
             if (table == null)
             {
                 return HttpNotFound();
