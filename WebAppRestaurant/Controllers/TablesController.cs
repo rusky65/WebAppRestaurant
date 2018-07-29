@@ -113,16 +113,16 @@ namespace WebAppRestaurant.Controllers
                 //Loading the Location item from database.
                 var location = db.Locations.Find(table.LocationId);
 
-                //Attaching to database in 2 step.
-                db.Tables.Attach(table);
-                var tableEntry = db.Entry(table);
-                //Loading navigation property (table.Location) actual value
-                tableEntry.Reference(x => x.Location)
-                                .Load();
-
+                //this 2 steps are enough cause of "Lazy loading"
+                //Loading the table actual value
+                //it is necessary to assigne the "virtual" for property ("public virtual Location Location { get; set; }" )
+                var tableToUpdate = db.Tables.Find(table.Id);
                 // sets the new value of location
-                table.Location = location;
-                tableEntry.State = EntityState.Modified;
+                tableToUpdate.Location = location;
+
+                //We have to set the other property, what on the view are
+                tableToUpdate.Name = table.Name;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
